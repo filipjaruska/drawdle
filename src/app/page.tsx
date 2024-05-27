@@ -1,24 +1,19 @@
-import Link from "next/link";
-import { mock } from "node:test";
 import { db } from "~/server/db";
 
-const mockData = [
-  "https://utfs.io/f/9bbee1ad-ff97-4fa2-a47c-2ad91b77f690-yn8kuo.jpeg",
-]
-const mockImages = mockData.map((url, index) => ({
-  id: index + 1,
-  url
-}))
+export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const post = await db.query.posts.findMany();
+  const images = await db.query.images.findMany({
+    orderBy: (model, { desc }) => desc(model.id),
+  });
+
   return (
     <main className="">
       <div className="flex flex- gap-4">
-        {post.map((post) => (<div key={post.id}>{post.name}</div>))}
-        {[...mockImages, ...mockImages].map((image) => (
+        {images.map((image) => (
           <div key={image.id} className="w-1/2 p-4">
             <img src={image.url} />
+            <div>{image.name}</div>
           </div>
         ))}
       </div>
