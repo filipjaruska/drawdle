@@ -1,7 +1,8 @@
 import "~/styles/globals.css";
+import "@uploadthing/react/styles.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { GeistSans } from "geist/font/sans";
-import { TopNav } from "./_components/page";
+import { TopNav } from "./_components/topnav";
 
 export const metadata = {
   title: "Drawdle",
