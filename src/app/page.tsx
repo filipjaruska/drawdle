@@ -1,8 +1,6 @@
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 import { db } from "~/server/db";
-import { UploadButton } from "~/utils/uploadthing";
 import UploadImage from "./_components/uploadImage";
-
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
