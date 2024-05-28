@@ -25,10 +25,15 @@ export const ourFileRouter = {
       // This code RUNS ON YOUR SERVER after upload
       console.log("Upload complete for userId:", metadata.userId);
 
-      await db.insert(images).values({
-        name: file.name,
-        url: file.url,
-      });
+      if (file.name && file.url && metadata.userId) {
+        await db.insert(images).values({
+          name: file.name,
+          url: file.url,
+          userId: metadata.userId,
+        });
+      } else {
+        throw new Error("File name, URL or user ID is null");
+      }
 
       // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
       return { uploadedBy: metadata.userId };

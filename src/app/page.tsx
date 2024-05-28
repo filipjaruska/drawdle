@@ -1,5 +1,7 @@
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 import { db } from "~/server/db";
+import { UploadButton } from "~/utils/uploadthing";
+import UploadImage from "./_components/uploadImage";
 
 export const dynamic = "force-dynamic";
 
@@ -26,13 +28,7 @@ export default async function HomePage() {
         <div className="w-full h-full text-2xl text-center ">Please sign in above.</div>
       </SignedOut>
       <SignedIn>
-        <div className="p-4 bg-gray-700">
-          <h1 className="text-4xl text-center">Welcome to your Image Gallery, put here button to upload images! make into ist own client component and put it in /mygalery</h1>
-          <p className="text-center text-gray-500">Descripton of stuff, recomend to scan images using x app</p>
-          <div className="flex justify-center">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" >Upload tem button</button>
-          </div>
-        </div>
+        <UploadImage h1Name="Welcome to your Image Gallery, put here button to upload images! make into ist own client component and put it in /mygalery" />
         <Images />
       </SignedIn>
     </main>
