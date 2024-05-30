@@ -9,7 +9,7 @@ export default async function MyDrawdle() {
     const images = await getMyImages();
     async function Images() {
         return (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-2" >
                 {images.map((image) => (
                     <div key={image.id} className="p-4 border-dashed border-2 border-sky-700 divide-y divide-blue-200">
                         {/* use next Image for the competition, costs money if used too much, nextConfig needs to allow for mnow */}
@@ -24,7 +24,7 @@ export default async function MyDrawdle() {
     }
 
     return (
-        <main className="pt-1">
+        <>
             <SignedOut>
                 <div className="w-full h-full text-2xl text-center ">Please sign in above.</div>
             </SignedOut>
@@ -36,6 +36,6 @@ export default async function MyDrawdle() {
         </div> */}
                 <Images />
             </SignedIn>
-        </main>
+        </>
     );
 }

@@ -32,9 +32,11 @@ export default function RootLayout({
         routerConfig={extractRouterConfig(ourFileRouter)}
       />
       <html lang="en" className={`${GeistSans.variable}`}>
-        <body className="flex-col gap-4">
-          <TopNav />
-          {children}
+        <body>
+          <div>
+            <TopNav />
+            <main className="overflow-y-scroll">{children}</main>
+          </div>
           {modal}
           <div id="modal-root" />
         </body>
