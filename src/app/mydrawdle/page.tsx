@@ -1,6 +1,8 @@
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 import UploadImage from "../_components/UploadImage";
 import { getMyImages } from "~/server/queries";
+import Link from "next/link";
+import Image from "next/image";
 export const dynamic = "force-dynamic";
 
 export default async function MyDrawdle() {
@@ -11,7 +13,9 @@ export default async function MyDrawdle() {
                 {images.map((image) => (
                     <div key={image.id} className="p-4 border-dashed border-2 border-sky-700 divide-y divide-blue-200">
                         {/* use next Image for the competition, costs money if used too much, nextConfig needs to allow for mnow */}
-                        <img src={image.url} className="p-2 w-full h-5/6" />
+                        <Link href={`/art/${image.id}`}>
+                            <Image alt={image.name} width={192} height={192} src={image.url} className="p-2 w-full h-5/6" />
+                        </Link>
                         <div className="text-xl">{image.name}</div>
                     </div>
                 ))}

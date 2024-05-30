@@ -26,9 +26,20 @@ export async function getMyImages() {
 //   return images.length;
 // }
 
+export async function getImage(id: number) {
+  const image = await db.query.images.findFirst({
+    where: (model, { eq }) => eq(model.id, id),
+  });
+
+  if (!image) throw new Error("Image not found");
+
+  return image;
+}
+
 export async function getImages() {
   const images = await db.query.images.findMany({
     orderBy: (model, { desc }) => desc(model.id),
   });
+
   return images;
 }
