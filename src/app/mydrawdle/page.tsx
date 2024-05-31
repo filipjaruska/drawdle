@@ -29,7 +29,7 @@ export default async function MyDrawdle() {
                 <div className="w-full h-full text-2xl text-center ">Please sign in above.</div>
             </SignedOut>
             <SignedIn>
-                <UploadImage h1Name="Welcome to your Image Gallery, put here button to upload images! make into ist own client component and put it in /mygalery" />
+                <UploadImage h1Name="text" />
                 {/* <div>
           if {images.length} === getMySubmittedImages + 1 then hide the upload button 
                 NO INSTEAD MOVE UPLOAD TO THE SUBMIT IN THE "EVENT" AND PUT PROFILE HERE WITH EDIT BUTTON
