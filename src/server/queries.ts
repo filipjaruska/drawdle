@@ -35,7 +35,7 @@ export async function getImage(id: number) {
     where: (model, { eq }) => eq(model.id, id),
   });
 
-  if (!image) throw new Error("Image not found");
+  if (!image) throw new Error("Image not found"); //return null;
 
   return image;
 }
@@ -58,4 +58,45 @@ export async function deleteImage(id: number) {
 
   revalidatePath("/mydrawdle");
   redirect("/mydrawdle");
+}
+
+export async function getDraweeks() {
+  const draweeks = await db.query.draweeks.findMany({
+    orderBy: (model, { desc }) => desc(model.id),
+  });
+
+  if (!draweeks) throw new Error("No draweeks found");
+
+  return draweeks;
+}
+
+export async function getDraweek(draweekId: number) {
+  const draweek = await db.query.draweeks.findFirst({
+    where: (model, { eq }) => eq(model.id, draweekId),
+  });
+
+  if (!draweek) throw new Error("No draweek found");
+
+  return draweek;
+}
+
+export async function getNewestDraweek() {
+  const draweeks = await db.query.draweeks.findMany({
+    orderBy: (model, { desc }) => desc(model.id),
+  });
+
+  if (!draweeks) throw new Error("No draweeks found");
+
+  const newestDraweek = draweeks[0];
+
+  return newestDraweek;
+}
+
+export async function getDraweekSubmissions(draweekId: number) {
+  const submissions = await db.query.submissions.findMany({
+    where: (model, { eq }) => eq(model.draweekId, draweekId),
+  });
+
+  if (!submissions) throw new Error("No submissions found");
+  return submissions;
 }

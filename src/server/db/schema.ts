@@ -8,6 +8,7 @@ import {
   serial,
   timestamp,
   varchar,
+  integer,
 } from "drizzle-orm/pg-core";
 
 /**
@@ -45,6 +46,7 @@ export const submissions = createTable(
     userId: varchar("userId", { length: 256 }).notNull(),
     userName: varchar("userName", { length: 256 }).notNull(),
     imageId: varchar("imageId", { length: 256 }).notNull(),
+    draweekId: integer("draweekId").notNull(),
 
     createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
@@ -55,13 +57,11 @@ export const submissions = createTable(
     imageIdIndex: index("image_id_idx").on(submission.imageId),
   }),
 );
-export const draweek = createTable("draweek", {
+export const draweeks = createTable("draweek", {
   id: serial("id").primaryKey(),
   topic: varchar("topic", { length: 256 }).notNull(),
-  submissionIds: varchar("submissionIds", { length: 256 }).array(),
 
   createdAt: timestamp("created_at", { withTimezone: true })
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
-  updatedAt: timestamp("updatedAt", { withTimezone: true }),
 });

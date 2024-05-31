@@ -1,11 +1,13 @@
 "use client";
 import { SignedIn, SignedOut } from '@clerk/nextjs';
 import { useEffect, useState } from 'react';
+import { useRouter } from "next/navigation";
 import { toast } from 'sonner';
 import { Button } from "~/components/ui/button";
 
 export default function HomePage() {
   const [timeRemaining, setTimeRemaining] = useState<number>();
+  const router = useRouter();
 
   useEffect(() => {
     const now = new Date();
@@ -42,7 +44,7 @@ export default function HomePage() {
             <h1 className="text-4xl text-center">Current Draweek</h1>
             <div className="text-gray-300">Time Remaining {formatTime(timeRemaining!)}</div>
             <div className="flex justify-center items-center">
-              <Button>Visit Current Draweek</Button>
+              <Button onClick={() => router.push("draweek/current")}>Visit Current Draweek</Button>
             </div>
           </div>
           <div className='w-1/2 p-4'>
