@@ -1,5 +1,5 @@
+'use server';
 import { clerkClient } from "@clerk/nextjs/server";
-import { toast } from "sonner";
 import { Button } from "~/components/ui/button";
 import { deleteImage, getImage } from "~/server/queries";
 
@@ -27,7 +27,6 @@ export default async function FullPageImageView(props: { artId: number }) {
                     <form action={async () => {
                         "use server";
                         await deleteImage(image.id);
-                        toast.error("Image was deleted!", { duration: 4000 });
                     }}>
                         <Button variant={"destructive"} type="submit">Delete</Button>
                     </form>
