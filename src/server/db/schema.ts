@@ -36,3 +36,32 @@ export const images = createTable(
     nameIndex: index("name_idx").on(example.name),
   }),
 );
+export const submissions = createTable(
+  "submission",
+  {
+    id: serial("id").primaryKey(),
+    description: varchar("url", { length: 1024 }),
+
+    userId: varchar("userId", { length: 256 }).notNull(),
+    userName: varchar("userName", { length: 256 }).notNull(),
+    imageId: varchar("imageId", { length: 256 }).notNull(),
+
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+  },
+  (submission) => ({
+    userIdIndex: index("user_id_idx").on(submission.userId),
+    imageIdIndex: index("image_id_idx").on(submission.imageId),
+  }),
+);
+export const draweek = createTable("draweek", {
+  id: serial("id").primaryKey(),
+  topic: varchar("topic", { length: 256 }).notNull(),
+  submissionIds: varchar("submissionIds", { length: 256 }).array(),
+
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  updatedAt: timestamp("updatedAt", { withTimezone: true }),
+});
