@@ -92,7 +92,7 @@ export async function getNewestDraweek() {
   return newestDraweek;
 }
 
-export async function getDraweekSubmissions(draweekId: number) {
+export async function getDraweekSubmissions(draweekId: string) {
   const submissions = await db.query.submissions.findMany({
     where: (model, { eq }) => eq(model.draweekId, draweekId),
   });

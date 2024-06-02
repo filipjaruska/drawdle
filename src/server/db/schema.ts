@@ -26,42 +26,67 @@ export const images = createTable(
     name: varchar("name", { length: 256 }).notNull(),
     url: varchar("url", { length: 1024 }).notNull(),
 
-    userId: varchar("userId", { length: 256 }).notNull(),
+    userId: varchar("user_id", { length: 256 }).notNull(),
 
     createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
-    updatedAt: timestamp("updatedAt", { withTimezone: true }),
+    updatedAt: timestamp("updated_at", { withTimezone: true }),
   },
-  (example) => ({
-    nameIndex: index("name_idx").on(example.name),
+  (image) => ({
+    nameIndex: index("drawdle_image_name_idx").on(image.name),
+    userIdIndex: index("drawdle_image_user_id_idx").on(image.userId),
   }),
 );
+
 export const submissions = createTable(
   "submission",
   {
     id: serial("id").primaryKey(),
-    description: varchar("url", { length: 1024 }),
+    description: varchar("description", { length: 1024 }),
 
-    userId: varchar("userId", { length: 256 }).notNull(),
-    userName: varchar("userName", { length: 256 }).notNull(),
-    imageId: varchar("imageId", { length: 256 }).notNull(),
-    draweekId: integer("draweekId").notNull(),
+    userId: varchar("user_id", { length: 256 }).notNull(),
+    userName: varchar("user_name", { length: 256 }).notNull(),
+    imageId: varchar("image_id", { length: 256 }).notNull(),
+    draweekId: varchar("draweek_id", { length: 256 }).notNull(),
 
     createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
   },
   (submission) => ({
-    userIdIndex: index("user_id_idx").on(submission.userId),
-    imageIdIndex: index("image_id_idx").on(submission.imageId),
+    userIdIndex: index("drawdle_submission_user_id_idx").on(submission.userId),
+    imageIdIndex: index("drawdle_submission_image_id_idx").on(
+      submission.imageId,
+    ),
+    draweekIdIndex: index("drawdle_submission_draweek_id_idx").on(
+      submission.draweekId,
+    ),
+    foreignKeys: [
+      { columns: [submission.userId], references: [images.userId] },
+      { columns: [submission.imageId], references: [images.id] },
+      { columns: [submission.draweekId], references: [draweeks.id] },
+    ],
   }),
 );
-export const draweeks = createTable("draweek", {
-  id: serial("id").primaryKey(),
-  topic: varchar("topic", { length: 256 }).notNull(),
 
-  createdAt: timestamp("created_at", { withTimezone: true })
-    .default(sql`CURRENT_TIMESTAMP`)
-    .notNull(),
-});
+export const draweeks = createTable(
+  "draweek",
+  {
+    id: serial("id").primaryKey(),
+    topic: varchar("topic", { length: 256 }).notNull(),
+
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+  },
+  (draweek) => ({
+    topicIndex: index("drawdle_draweek_topic_idx").on(draweek.topic),
+  }),
+);
