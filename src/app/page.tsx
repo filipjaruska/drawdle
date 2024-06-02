@@ -52,6 +52,7 @@ export default function HomePage() {
             {/* Voting content goes here */}
           </div>
         </div>
+        <div className="text-center">THE TIME REMAINING DOESNT WORK ON SUNDAY AND DELETE BUTTON THROWS AN ERROR</div>
       </SignedIn>
       <SignedOut>
         <div className="flex items-center justify-center h-screen">

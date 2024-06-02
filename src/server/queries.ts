@@ -109,11 +109,13 @@ export async function submitSubmission(
   const user = auth();
   if (!user.userId) throw new Error("User not authorized");
 
-  const image = await db.query.images.findFirst({
+  const images = await db.query.images.findMany({
+    orderBy: (model, { desc }) => desc(model.id),
     where: (model, { eq }) => eq(model.userId, user.userId),
   });
-
-  if (!image) throw new Error("No images found for this user");
+  if (!images) throw new Error("No images found for this user");
+  const image = images[0];
+  if (!image) throw new Error("No image found for this user");
 
   await db.insert(submissions).values({
     description: description,
