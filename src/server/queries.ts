@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import "server-only";
 import { db } from "~/server/db";
-import { images } from "./db/schema";
+import { images, submissions } from "./db/schema";
 
 export async function getMyImages() {
   const user = auth();
@@ -99,4 +99,25 @@ export async function getDraweekSubmissions(draweekId: string) {
 
   if (!submissions) throw new Error("No submissions found");
   return submissions;
+}
+
+export async function submitSubmission(
+  draweekId: string,
+  description: string,
+  imageId: string,
+  userName: string,
+) {
+  const user = auth();
+  if (!user.userId) throw new Error("User not authorized");
+
+  await db.insert(submissions).values({
+    description: description,
+
+    userId: user.userId,
+    userName: userName,
+    imageId: imageId,
+    imageUrl: "test url",
+    draweekId: draweekId,
+  });
+  return {};
 }

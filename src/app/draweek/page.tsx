@@ -16,7 +16,7 @@ const Draweek = async () => {
                 <div>Past draweeks</div>
             </div>
             <div className=''>
-                {draweeks.map((draweek) => (
+                {draweeks.slice(1).map((draweek) => (
                     <Link href={`/draweek/${draweek.id}`} key={draweek.id}>
                         <div className="border-4 border-blue-300 border-opacity-80 p-1 gap-2 m-4 rounded-lg">
                             <h2 className="text-2xl text-center">{draweek.topic}</h2>

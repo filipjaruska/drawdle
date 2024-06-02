@@ -7,7 +7,7 @@ interface Props {
 
 const SpecificDraweek = async ({ params }: Props) => {
     const draweek = await getDraweek(Number(params.id));
-    const submissions = await getDraweekSubmissions(draweek.id);
+    const submissions = await getDraweekSubmissions(draweek.id.toString());
     return (
         <div>
             <div>
@@ -18,6 +18,7 @@ const SpecificDraweek = async ({ params }: Props) => {
                 {submissions.map((submission) => (
                     <div key={submission.id}>
                         <p>{submission.userName}</p>
+                        <p>{submission.description}</p>
                     </div>
                 ))}
             </div>
