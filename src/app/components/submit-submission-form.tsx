@@ -9,7 +9,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { createSubmission } from '~/server/actions/create-submission';
 import { toast } from 'sonner';
-import { useUser } from "@clerk/clerk-react";
 
 
 
@@ -22,10 +21,6 @@ const fromSchema = z.object({
 });
 
 const SubmitSubmissionForm = ({ draweekId }: Props) => {
-    // const { user } = useUser();
-    const userName = "user!.fullName";
-    if (!userName) throw new Error("User not authorized");
-
     const form = useForm<z.infer<typeof fromSchema>>({
         resolver: zodResolver(fromSchema),
         defaultValues: {
@@ -34,7 +29,7 @@ const SubmitSubmissionForm = ({ draweekId }: Props) => {
     });
 
     async function onSubmit(value: z.infer<typeof fromSchema>) {
-        await createSubmission(value, draweekId, userName).then(result => {
+        await createSubmission(value, draweekId).then(result => {
             if (result?.success) {
                 form.reset();
                 toast.success(result.success);

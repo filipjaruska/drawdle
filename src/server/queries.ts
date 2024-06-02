@@ -104,19 +104,24 @@ export async function getDraweekSubmissions(draweekId: string) {
 export async function submitSubmission(
   draweekId: string,
   description: string,
-  imageId: string,
   userName: string,
 ) {
   const user = auth();
   if (!user.userId) throw new Error("User not authorized");
+
+  const image = await db.query.images.findFirst({
+    where: (model, { eq }) => eq(model.userId, user.userId),
+  });
+
+  if (!image) throw new Error("No images found for this user");
 
   await db.insert(submissions).values({
     description: description,
 
     userId: user.userId,
     userName: userName,
-    imageId: imageId,
-    imageUrl: "test url",
+    imageId: image.id.toString(),
+    imageUrl: image.url,
     draweekId: draweekId,
   });
   return {};
