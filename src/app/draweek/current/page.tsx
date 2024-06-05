@@ -8,10 +8,6 @@ const CurrentDraweek = async () => {
     const draweek = await getNewestDraweek();
     const submissions = await getDraweekSubmissions(draweek!.id.toString());
 
-    // const onSubmit = async (data: any) => {
-    //     await submitSubmission(draweek!.id.toString(), data, 'imageId');
-    // }
-
     return (
         <div className="m-4">
             <div className='border-4 border-pink-300 border-opacity-80 m-4 rounded-lg'>

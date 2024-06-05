@@ -1,12 +1,23 @@
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 import UploadImage from "../_components/UploadImage";
-import { getMyImages } from "~/server/queries";
+import { getImage, getMyImages } from "~/server/queries";
 import Link from "next/link";
 import Image from "next/image";
+import { auth } from "@clerk/nextjs/server";
+import { clerkClient } from "@clerk/nextjs/server";
 export const dynamic = "force-dynamic";
 
 export default async function MyDrawdle() {
     const images = await getMyImages();
+
+    // This is pain
+    const user = auth();
+    if (!user.userId) throw new Error("User not authorized");
+    const uploaderInfo = await clerkClient.users.getUser(user.userId);
+    if (!uploaderInfo) throw new Error("User not found");
+    const canUpload = uploaderInfo.privateMetadata["can-upload"]
+
+
     async function Images() {
         return (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-2" >
@@ -29,11 +40,14 @@ export default async function MyDrawdle() {
                 <div className="w-full h-full text-2xl text-center ">Please sign in above.</div>
             </SignedOut>
             <SignedIn>
-                <UploadImage h1Name="text" />
-                {/* <div>
-          if {images.length} === getMySubmittedImages + 1 then hide the upload button 
-                NO INSTEAD MOVE UPLOAD TO THE SUBMIT IN THE "EVENT" AND PUT PROFILE HERE WITH EDIT BUTTON
-        </div> */}
+                {/* <UploadImage h1Name="text" /> */}
+                <div className="border-4 border-gray-200 border-opacity-80 m-4 rounded-lg flex bg-slate-700'">
+                    <img src={uploaderInfo.imageUrl} alt="user profile image" width={50} height={50} className="rounded-full" />
+                    <div className="flex flex-col">
+                        <div>Username: {uploaderInfo.fullName}</div>
+                        <div>Upload rights: {canUpload ? "true" : "false"}</div>
+                    </div>
+                </div>
                 <Images />
             </SignedIn>
         </>
