@@ -2,10 +2,13 @@
 
 - [ ] FIX home screen countdown
 - [ ] FIX moodle getImage() error after deleting an image
+- [ ] FIX submitting submissions
 - [ ] Implement voting for draweeks
 - [ ] Create API endpoint for draweeks
-- [ ] redo UI/UX Design
+- [x] redo UI/UX Design
 - [ ] Implement Duolingoask streak
+- [ ] Implement loading skeletons
+- [ ] Rework schema to accommodate currant fetchers
 
 # BOILER Create T3 App
 

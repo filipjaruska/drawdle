@@ -39,20 +39,22 @@ export default function HomePage() {
   return (
     <>
       <SignedIn>
-        <div className='border-4 border-gray-200 border-opacity-80 m-4 rounded-lg flex bg-slate-700'>
-          <div className='w-1/2 border-r-4 border-gray-200 p-4 flex flex-col items-center justify-center gap-4'>
+        <div className='border-4 border-gray-200 border-opacity-80 m-4 rounded-lg flex flex-col sm:flex-row bg-slate-700'>
+          <div className='w-full sm:w-1/2 sm:border-r-4 border-b-0 border-gray-200 p-4 flex flex-col items-center justify-center gap-4'>
             <h1 className="text-4xl text-center">Current Draweek</h1>
             <div className="text-gray-300">Time Remaining {formatTime(timeRemaining!)}</div>
             <div className="flex justify-center items-center">
               <Button onClick={() => router.push("draweek/current")}>Visit Current Draweek</Button>
             </div>
           </div>
-          <div className='w-1/2 p-4'>
+          <div className='w-full sm:w-1/2 border-gray-200 border-t-4 p-4 sm:border-t-0 flex flex-col items-center justify-center gap-4'>
             <h1 className="text-4xl text-center">Vote on Future Draweek</h1>
             {/* Voting content goes here */}
+            <div>Currently winning: Cat</div>
+            <Button onClick={() => toast.info("You're cute!")}>Vote</Button>
           </div>
         </div>
-        <div className="text-center">THE TIME REMAINING DOESNT WORK ON SUNDAY AND DELETE BUTTON THROWS AN ERROR</div>
+        <div className="text-center">.</div>
       </SignedIn>
       <SignedOut>
         <div className="flex items-center justify-center h-screen">
