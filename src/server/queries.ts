@@ -175,11 +175,15 @@ export async function postVote(userId: string, pollingId: number) {
 export async function submitVote(pollingId: string, topic: string) {
   const user = auth();
   if (!user.userId) throw new Error("User not authorized");
+  const uploaderInfo = await clerkClient.users.getUser(user.userId);
+  if (!uploaderInfo) throw new Error("User not found");
+  const userName = uploaderInfo.firstName;
+  if (!userName) throw new Error("User not authorized");
 
   await db.insert(votes).values({
     pollingId: pollingId,
     topic: topic,
-    createdBy: user.userId,
+    createdBy: userName,
   });
 
   await db

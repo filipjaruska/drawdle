@@ -4,7 +4,7 @@ import { postVote, submitVote } from "../queries";
 import { z } from "zod";
 
 const fromSchema = z.object({
-  description: z.string().min(1),
+  description: z.string().min(4),
 });
 
 type CreateSubmission = z.infer<typeof fromSchema>;

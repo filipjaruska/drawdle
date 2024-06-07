@@ -11,13 +11,14 @@ import { toast } from 'sonner';
 
 interface Props {
     pollingId: string,
+    canSubmit: boolean,
 }
 
 const fromSchema = z.object({
-    description: z.string().min(1),
+    description: z.string().min(4),
 });
 
-const SubmitVoteForm = ({ pollingId }: Props) => {
+const SubmitVoteForm = ({ pollingId, canSubmit }: Props) => {
     const form = useForm<z.infer<typeof fromSchema>>({
         resolver: zodResolver(fromSchema),
         defaultValues: {
@@ -39,7 +40,7 @@ const SubmitVoteForm = ({ pollingId }: Props) => {
     }
 
     return (
-        <div className="border border-gray-200 border-opacity-80 p-6 rounded-lg bg-slate-700 shadow-md">
+        <div className="border border-gray-200 border-opacity-80 p-6 rounded-lg bg-slate-700 shadow-md gap-4">
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-2 flex flex-col'>
                     <h1 className="text-4xl text-center">Have an Idea? GIVE IT!</h1>
@@ -49,16 +50,16 @@ const SubmitVoteForm = ({ pollingId }: Props) => {
                             name='description'
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Description</FormLabel>
+                                    <FormLabel>Topic</FormLabel>
                                     <FormControl>
-                                        <Input {...field} id='description' name='description' placeholder='description' type='text' />
+                                        <Input {...field} id='description' name='description' placeholder='Topic' type='text' />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
                     </div>
-                    <Button type='submit'>Submit</Button>
+                    {canSubmit ? <Button type='submit'>Submit</Button> : <div className="text-red-700 font-extrabold text-center">You do not have permission to EXIST! (upload)</div>}
                 </form>
             </Form>
         </div>
