@@ -15,8 +15,7 @@ const VotePage = async () => {
     if (!uploaderInfo) throw new Error("User not found");
     const canUpload = uploaderInfo.privateMetadata["can-upload"]
 
-    // chack metadata for voting
-    votes = votes.sort((a, b) => b.voterIDs!.length - a.voterIDs!.length);
+    votes = votes.sort((a, b) => (b.voterIDs ? b.voterIDs.length : 0) - (a.voterIDs ? a.voterIDs.length : 0));
 
     return (
         <div className="container mx-auto p-4">
@@ -49,7 +48,7 @@ const VotePage = async () => {
                             </div>
                         </div>
                         <div className="mt-4 sm:mt-0 sm:ml-4 flex items-center space-x-4 text-center sm:text-right">
-                            <div className="text-xl text-white">Votes: {vote.voterIDs?.length}</div>
+                            {(vote.voterIDs?.length === 0) ? <div className="text-xl text-white">Votes: {vote.voterIDs?.length}</div> : null}
                             {!vote.voterIDs?.includes(user.userId.toString()) && (
                                 <PostVoteForm userId={user.userId.toString()} pollingId={vote.id} />
                             )}
