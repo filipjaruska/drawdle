@@ -91,3 +91,39 @@ export const draweeks = createTable(
     topicIndex: index("drawdle_draweek_topic_idx").on(draweek.topic),
   }),
 );
+
+export const pollings = createTable("polling", {
+  id: serial("id").primaryKey(),
+  winner: varchar("winner", { length: 256 }),
+  submittedIdeaIds: varchar("voter_ids", { length: 256 }).array(),
+
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+});
+
+export const votes = createTable(
+  "vote",
+  {
+    id: serial("id").primaryKey(),
+    pollingId: varchar("polling_id", { length: 256 }).notNull(),
+    createdBy: varchar("created_by", { length: 256 }).notNull(),
+    topic: varchar("topic", { length: 256 }).notNull(),
+    voterIDs: varchar("voter_ids", { length: 256 }).array(),
+    voterImages: varchar("voter_images", { length: 256 }).array(),
+
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+  },
+  (vote) => ({
+    topicIndex: index("drawdle_vote_topic_idx").on(vote.topic),
+    foreignKeys: [{ columns: [vote.pollingId], references: [pollings.id] }],
+  }),
+);

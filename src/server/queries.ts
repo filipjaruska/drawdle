@@ -1,10 +1,10 @@
-import { auth } from "@clerk/nextjs/server";
-import { and, eq } from "drizzle-orm";
+import { auth, clerkClient } from "@clerk/nextjs/server";
+import { and, eq, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import "server-only";
 import { db } from "~/server/db";
-import { images, submissions } from "./db/schema";
+import { images, pollings, submissions, votes } from "./db/schema";
 
 export async function getMyImages() {
   const user = auth();
@@ -126,5 +126,69 @@ export async function submitSubmission(
     imageUrl: image.url,
     draweekId: draweekId,
   });
+  return {};
+}
+
+export async function getNewestPooling() {
+  const pooling = await db.query.pollings.findMany({
+    orderBy: (model, { desc }) => desc(model.id),
+  });
+
+  if (!pooling) throw new Error("No draweeks found");
+
+  const newestPooling = pooling[0];
+
+  return newestPooling;
+}
+
+export async function getPollingVotes(PollingsID: string) {
+  const votes = await db.query.votes.findMany({
+    where: (model, { eq }) => eq(model.pollingId, PollingsID),
+  });
+
+  if (!votes) throw new Error("No submissions found");
+  return votes;
+}
+
+export async function postVote(userId: string, pollingId: number) {
+  const vote = await db.query.votes.findFirst({
+    where: (model, { eq }) => eq(model.id, pollingId),
+  });
+  console.log(vote);
+  const uploaderInfo = await clerkClient.users.getUser(userId);
+  if (!uploaderInfo) throw new Error("User not found");
+  if (vote && !vote.voterIDs?.includes(userId)) {
+    console.log("IT passed");
+    await db
+      .update(votes)
+      .set({
+        voterIDs: sql`array_append(${votes.voterIDs}, ${userId})`,
+        voterImages: sql`array_append(${votes.voterImages}, ${uploaderInfo.imageUrl})`,
+        updatedAt: sql`CURRENT_TIMESTAMP`,
+      })
+      .where(eq(votes.id, vote.id))
+      .execute();
+  }
+  return {};
+}
+
+export async function submitVote(pollingId: string, topic: string) {
+  const user = auth();
+  if (!user.userId) throw new Error("User not authorized");
+
+  await db.insert(votes).values({
+    pollingId: pollingId,
+    topic: topic,
+    createdBy: user.userId,
+  });
+
+  await db
+    .update(pollings)
+    .set({
+      submittedIdeaIds: sql`array_append(${pollings.submittedIdeaIds}, ${user.userId})`,
+      updatedAt: sql`CURRENT_TIMESTAMP`,
+    })
+    .where(eq(pollings.id, Number(pollingId)))
+    .execute();
   return {};
 }
