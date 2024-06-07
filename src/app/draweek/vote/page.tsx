@@ -48,7 +48,7 @@ const VotePage = async () => {
                             </div>
                         </div>
                         <div className="mt-4 sm:mt-0 sm:ml-4 flex items-center space-x-4 text-center sm:text-right">
-                            {(vote.voterIDs?.length === 0) ? <div className="text-xl text-white">Votes: {vote.voterIDs?.length}</div> : null}
+                            {vote.voterIDs?.length ? <div className="text-xl text-white">Votes: {vote.voterIDs?.length}</div> : null}
                             {!vote.voterIDs?.includes(user.userId.toString()) && (
                                 <PostVoteForm userId={user.userId.toString()} pollingId={vote.id} />
                             )}
