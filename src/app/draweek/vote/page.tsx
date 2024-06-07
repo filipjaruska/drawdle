@@ -3,6 +3,8 @@ import { auth } from "@clerk/nextjs/server";
 import { getNewestPooling, getPollingVotes } from '~/server/queries';
 import PostVoteForm from '~/app/components/post-vote-form';
 import SubmitVoteForm from '~/app/components/submit-vote-form';
+export const dynamic = "force-dynamic";
+
 
 
 const VotePage = async () => {
