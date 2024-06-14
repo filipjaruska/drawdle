@@ -31,6 +31,9 @@ export default async function HomePage() {
           <div className='font-semibold text-xl text-center'>newest submission</div>
           <img src={NewArt[0]?.url} alt='featured work of art' />
         </div>
+        <div className="container hidden mt-4 border-4 border-gray-200 border-opacity-80 rounded-lg flex flex-col bg-slate-700 m-auto p-4 gap-4">
+          Download PWA
+        </div>
       </SignedIn>
       <SignedOut>
         <div className="flex items-center justify-center h-screen">

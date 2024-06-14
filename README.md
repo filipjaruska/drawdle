@@ -1,21 +1,19 @@
 # TODO
 
-- [x] FIX home screen countdown
 - [ ] FIX moodle getImage() error after deleting an image
-- [x] FIX submitting submissions
-- [x] Implement voting for draweeks
 - [ ] Create API endpoint for draweeks
-- [x] redo UI/UX Design
 - [x] Implement Duolingoask streak
   - [ ] check if user submitted in a 14d, if not reset
-- [ ] Implement loading skeletons
+- [x] Implement loading skeletons
   - [x] For /draweek/current
-  - [ ] For /draweek
-  - [ ] For /draweek
-  - [ ] For /mydrawdle
-  - [ ] For /voteaws
+  - [x] For /draweek/id
+  - [x] For /draweek/vote
+  - [x] For /draweek
+  - [x] For /mydrawdle
 - [ ] Rework schema to accommodate currant fetchers
 - [ ] Improve submit form
+- [ ] Write Readme
+- [ ] REFACTOR
 
 ## Docs
 

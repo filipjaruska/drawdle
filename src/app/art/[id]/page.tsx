@@ -10,6 +10,6 @@ export default function ArtPage({
     if (Number.isNaN(idAsNumber)) throw new Error("Invalid ID");
 
     return (
-        <FullPageImageView artId={idAsNumber} />
+        <FullPageImageView artId={idAsNumber} bgOn={false} />
     );
 }

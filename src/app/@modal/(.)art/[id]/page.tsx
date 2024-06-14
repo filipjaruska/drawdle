@@ -11,7 +11,7 @@ export default function ArtModal({
 
     return (
         <Modal>
-            <FullPageImageView artId={idAsNumber} />
+            <FullPageImageView artId={idAsNumber} bgOn={true} />
         </Modal>
     );
 }

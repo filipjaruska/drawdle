@@ -13,13 +13,14 @@ import Link from 'next/link';
 
 interface Props {
     draweekId: string,
+    canSubmit: boolean,
 }
 
 const fromSchema = z.object({
     description: z.string().min(1),
 });
 
-const SubmitSubmissionForm = ({ draweekId }: Props) => {
+const SubmitSubmissionForm = ({ draweekId, canSubmit }: Props) => {
     const form = useForm<z.infer<typeof fromSchema>>({
         resolver: zodResolver(fromSchema),
         defaultValues: {
@@ -53,14 +54,14 @@ const SubmitSubmissionForm = ({ draweekId }: Props) => {
                                 <FormItem>
                                     <FormLabel>Description</FormLabel>
                                     <FormControl>
-                                        <Input {...field} id='description' name='description' placeholder='description' type='text' />
+                                        <Input {...field} id='description' name='description' placeholder='title or a description' type='text' />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
                     </div>
-                    <Button type='submit'>Submit</Button>
+                    {canSubmit ? <Button type='submit'>Submit</Button> : <div className="text-red-700 font-extrabold text-center">You do not have permission to submit.</div>}
                 </form>
                 <div className='items-center flex flex-col justify-center'>
                     <div className="text-gray-400">Recommend using
