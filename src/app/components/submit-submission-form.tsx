@@ -64,7 +64,7 @@ const SubmitSubmissionForm = ({ draweekId }: Props) => {
                 </form>
                 <div className='items-center flex flex-col justify-center'>
                     <div className="text-gray-400">Recommend using
-                        <Link href={"https://play.google.com/store/apps/details?id=com.google.android.apps.photos.scanner"} className='hover:underline text-gray-500'> moew </Link>
+                        <Link href={"https://play.google.com/store/apps/details?id=com.google.android.apps.photos.scanner"} className='hover:underline text-gray-500'> Photos Scanner </Link>
                         for photos</div>
                     <SimpleUploadButton />
                 </div>

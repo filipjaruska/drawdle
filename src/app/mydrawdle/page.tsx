@@ -6,15 +6,18 @@ import { auth } from "@clerk/nextjs/server";
 import { clerkClient } from "@clerk/nextjs/server";
 import FunnyButton from "../_components/funny-button";
 
+
 export default async function MyDrawdle() {
+
     const images = await getMyImages();
 
-    // This is pain
     const user = auth();
     if (!user.userId) throw new Error("User not authorized");
     const uploaderInfo = await clerkClient.users.getUser(user.userId);
     if (!uploaderInfo) throw new Error("User not found");
     const canUpload = uploaderInfo.privateMetadata["can-upload"]
+    const streakLength = uploaderInfo.privateMetadata["streak-length"] as number
+
 
     function formatTimestamp(timestamp: number | null) {
         if (timestamp === null) {
@@ -61,8 +64,8 @@ export default async function MyDrawdle() {
                                     height={54}
                                     className="rounded-full"
                                 />
-                                <div className="absolute -top-1 -right-1 bg-white text-black rounded-full w-6 h-6 flex items-center justify-center">
-                                    0
+                                <div className="absolute -top-2 -right-2 bg-orange-600 text-white text-xl font-bold rounded-full w-7 h-7 flex items-center justify-center">
+                                    {streakLength ? streakLength : 0}
                                 </div>
                                 <div className="absolute -left-1 -bottom-1 flex items-center justify-center">{canUpload ? "🟢" : "🔴"}</div>
                             </div>

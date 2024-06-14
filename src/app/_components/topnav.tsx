@@ -29,7 +29,6 @@ export function TopNav() {
                     <SignedIn>
                         <Link href="/draweek" className="text-gray-300">Draweek</Link>
                         <Link href="/mydrawdle" className="text-gray-300">My Drawdle</Link>
-                        <p className="hidden sm:block text-gray-300">Download APK</p>
                     </SignedIn>
                 </div>
                 <div className="flex flex-row">

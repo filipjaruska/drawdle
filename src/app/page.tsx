@@ -1,13 +1,12 @@
-"use client";
 import { SignedIn, SignedOut } from '@clerk/nextjs';
-import { useRouter } from "next/navigation";
-import { toast } from 'sonner';
-import { Button } from "~/components/ui/button";
 import DraweekCountdown from './components/draweek-countdown';
 import FunnyButton from './_components/funny-button';
+import LinkButton from '~/components/buttons/link-button';
+import { getImages, getWinningVote } from '~/server/queries';
 
-export default function HomePage() {
-  const router = useRouter();
+export default async function HomePage() {
+  const WinningVote = await getWinningVote()
+  const NewArt = await getImages()
   return (
     <>
       <SignedIn>
@@ -18,25 +17,19 @@ export default function HomePage() {
               <DraweekCountdown />
             </div>
             <div className="flex justify-center items-center">
-              <Button onClick={() => {
-                toast.info("You smell!!")
-                router.push("draweek/current")
-              }}>Visit Current Draweek</Button>
+              <LinkButton text='visit current draweek' link='draweek/current' message={null} />
             </div>
           </div>
           <div className='w-full sm:w-1/2 border-gray-200 border-t-4 p-4 sm:border-t-0 flex flex-col items-center justify-center gap-4'>
             <h1 className="text-4xl text-center">Vote on Future Draweek</h1>
             {/* Voting content goes here */}
-            <div>Currently winning: Cat</div>
-            <Button onClick={() => {
-              toast.info("You're cute!")
-              router.push("/draweek/vote")
-            }}>Vote</Button>
+            <div>Currently winning: {WinningVote}</div>
+            <LinkButton text='vote on upcoming draweek' link='draweek/vote' message={null} />
           </div>
         </div>
-        <div className="container border-4 border-gray-200 border-opacity-80 rounded-lg flex flex-col bg-slate-700 m-auto">
-          <div className='font-semibold text-xl text-center'>The art</div>
-          <img src='https://utfs.io/f/dece9001-7e92-41e1-82a5-78d121d1f4d8-xwjqf4.png' alt='featured work of art' />
+        <div className="container border-4 border-gray-200 border-opacity-80 rounded-lg flex flex-col bg-slate-700 m-auto p-4 gap-4">
+          <div className='font-semibold text-xl text-center'>newest submission</div>
+          <img src={NewArt[0]?.url} alt='featured work of art' />
         </div>
       </SignedIn>
       <SignedOut>

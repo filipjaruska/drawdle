@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import "server-only";
 import { db } from "~/server/db";
-import { images, pollings, submissions, votes } from "./db/schema";
+import { draweeks, images, pollings, submissions, votes } from "./db/schema";
 
 export async function getMyImages() {
   const user = auth();
@@ -17,18 +17,6 @@ export async function getMyImages() {
   });
   return images;
 }
-
-// export async function getMySubmittedImages() {
-//   const user = auth();
-
-//   if (!user.userId) throw new Error("User not authorized");
-
-//   const images = await db.query.images.findMany({
-//     where: (model, { not, isNull, eq }) =>
-//       not(isNull(model.submitted)) && eq(model.userId, user.userId),
-//   });
-//   return images.length;
-// }
 
 export async function getImage(id: number) {
   const image = await db.query.images.findFirst({
@@ -117,15 +105,37 @@ export async function submitSubmission(
   const image = images[0];
   if (!image) throw new Error("No image found for this user");
 
+  const uploaderInfo = await clerkClient.users.getUser(user.userId);
+  if (!uploaderInfo) throw new Error("User not found");
+
   await db.insert(submissions).values({
     description: description,
 
     userId: user.userId,
     userName: userName,
+    userIcon: uploaderInfo.imageUrl,
     imageId: image.id.toString(),
     imageUrl: image.url,
     draweekId: draweekId,
   });
+
+  await db
+    .update(draweeks)
+    .set({
+      submittedSubmissionsIds: sql`array_append(${draweeks.submittedSubmissionsIds}, ${user.userId})`,
+      updatedAt: sql`CURRENT_TIMESTAMP`,
+    })
+    .where(eq(draweeks.id, Number(draweekId)))
+    .execute();
+
+  const streakLength = uploaderInfo.privateMetadata["streak-length"] as number;
+
+  await clerkClient.users.updateUserMetadata(user.userId, {
+    privateMetadata: {
+      "streak-length": streakLength + 1,
+    },
+  });
+
   return {};
 }
 
@@ -195,4 +205,15 @@ export async function submitVote(pollingId: string, topic: string) {
     .where(eq(pollings.id, Number(pollingId)))
     .execute();
   return {};
+}
+
+export async function getWinningVote() {
+  const votes = await db.query.votes.findMany();
+  const sortedVotes = votes.sort(
+    (a, b) =>
+      (b.voterIDs ? b.voterIDs.length : 0) -
+      (a.voterIDs ? a.voterIDs.length : 0),
+  );
+
+  return sortedVotes[0]?.topic;
 }

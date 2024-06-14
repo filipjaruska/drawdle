@@ -45,6 +45,7 @@ export const submissions = createTable(
     description: varchar("description", { length: 1024 }),
 
     userId: varchar("user_id", { length: 256 }).notNull(),
+    userIcon: varchar("user_icon", { length: 256 }),
     userName: varchar("user_name", { length: 256 }).notNull(),
     imageId: varchar("image_id", { length: 256 }).notNull(),
     imageUrl: varchar("image_url", { length: 1024 }).notNull(),
@@ -79,6 +80,7 @@ export const draweeks = createTable(
   {
     id: serial("id").primaryKey(),
     topic: varchar("topic", { length: 256 }).notNull(),
+    submittedSubmissionsIds: varchar("submitters_ids", { length: 256 }).array(),
 
     createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
@@ -95,7 +97,7 @@ export const draweeks = createTable(
 export const pollings = createTable("polling", {
   id: serial("id").primaryKey(),
   winner: varchar("winner", { length: 256 }),
-  submittedIdeaIds: varchar("voter_ids", { length: 256 }).array(),
+  submittedIdeaIds: varchar("voters_ids", { length: 256 }).array(),
 
   createdAt: timestamp("created_at", { withTimezone: true })
     .default(sql`CURRENT_TIMESTAMP`)
