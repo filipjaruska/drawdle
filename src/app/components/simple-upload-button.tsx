@@ -49,7 +49,7 @@ function UploadSVG() {
     );
 }
 
-export function SimpleUploadButton() {
+export function SimpleUploadButton({ onBooleanChange }: { onBooleanChange: (value: boolean) => void; }) {
     const router = useRouter();
 
 
@@ -82,6 +82,8 @@ export function SimpleUploadButton() {
         onClientUploadComplete() {
             toast.dismiss("upload-begin");
             toast("Upload complete!");
+
+            onBooleanChange(true);
 
             router.refresh();
         },

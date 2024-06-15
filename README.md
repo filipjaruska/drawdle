@@ -1,11 +1,11 @@
 # TODO
 
-- [ ] FIX moodle getImage() error after deleting an image
-- [x] Create API endpoint for draweeks
+- [x] FIX moodle getImage() error after deleting an image (i think its been fixed since 2 commits ago)
 - [x] Implement Duolingoask streak
   - [?] check if user submitted in a 14d, if not reset (i feel autistic)
 - [ ] Rework schema to accommodate currant fetchers
-- [ ] Improve submit form
+- [x] Improve submit form
+  - [ ] display an actual image
 - [ ] Improve Drawdle Home page
   - [ ] ui change newest submission
   - [ ] add download pwa

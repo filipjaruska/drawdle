@@ -1,5 +1,5 @@
 "use client";
-import React from 'react'
+import React, { useState } from 'react'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '~/components/ui/form';
 import { Input } from '~/components/ui/input';
 import { useForm } from 'react-hook-form';
@@ -41,6 +41,12 @@ const SubmitSubmissionForm = ({ draweekId, canSubmit }: Props) => {
 
     }
 
+    const [booleanValue, setBooleanValue] = useState(false);
+
+    const handleBooleanChange = (value: boolean) => {
+        setBooleanValue(value);
+    };
+
     return (
         <div className='border-4 border-gray-200 border-opacity-80 p-1 gap-2 m-4 rounded-lg bg-slate-700 shadow-md items-center flex flex-row justify-center'>
             <Form {...form}>
@@ -63,12 +69,19 @@ const SubmitSubmissionForm = ({ draweekId, canSubmit }: Props) => {
                     </div>
                     {canSubmit ? <Button type='submit'>Submit</Button> : <div className="text-red-700 font-extrabold text-center">You do not have permission to submit.</div>}
                 </form>
-                <div className='items-center flex flex-col justify-center'>
-                    <div className="text-gray-400">Recommend using
-                        <Link href={"https://play.google.com/store/apps/details?id=com.google.android.apps.photos.scanner"} className='hover:underline text-gray-500'> Photos Scanner </Link>
-                        for photos</div>
-                    <SimpleUploadButton />
-                </div>
+                {!booleanValue ?
+
+                    <div className='items-center flex flex-col justify-center'>
+                        <div className="text-gray-400">Recommend using
+                            <Link href={"https://play.google.com/store/apps/details?id=com.google.android.apps.photos.scanner"} className='hover:underline text-gray-500'> Photos Scanner </Link>
+                            for photos</div>
+                        <SimpleUploadButton onBooleanChange={handleBooleanChange} />
+                    </div>
+                    :
+                    <div className='w-1/4 items-center justify-center flex'>
+                        Upload Complete, if you have already uploaded the image before you dont have to upload it again, the latest uploaded image will be used.
+                    </div>
+                }
             </Form>
         </div>
     )

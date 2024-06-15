@@ -67,7 +67,7 @@ export async function POST() {
     });
     if (!newPolling) throw new Error("Winning vote not found.");
 
-    const promises = Array.from({ length: 3 }, async () => {
+    const promises = Array.from({ length: 5 }, async () => {
       const drawableWord = await getRandomDrawableWord();
       await db.insert(votes).values({
         pollingId: newPolling.id.toString(),
