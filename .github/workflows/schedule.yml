@@ -1,0 +1,12 @@
+name: Weekly Draweek
+
+on:
+  schedule:
+    - cron: "58 23 * * 0"
+
+jobs:
+  run-task:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Curl API request
+        run: curl -X POST https://drawdle-beta.vercel.app/api/draweek/
