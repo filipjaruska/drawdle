@@ -208,6 +208,7 @@ export async function submitVote(pollingId: string, topic: string) {
 }
 
 export async function getWinningVote() {
+  //fix find votes for a specific polling
   const votes = await db.query.votes.findMany();
   const sortedVotes = votes.sort(
     (a, b) =>
