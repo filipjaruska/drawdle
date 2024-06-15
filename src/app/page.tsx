@@ -29,7 +29,7 @@ export default async function HomePage() {
         </div>
         <div className="container border-4 border-gray-200 border-opacity-80 rounded-lg flex flex-col bg-slate-700 m-auto p-4 gap-4">
           <div className='font-semibold text-xl text-center'>newest submission</div>
-          <img src={NewArt[0]?.url} alt='featured work of art' />
+          <img src={NewArt[0]?.url} alt='featured work of art' className="max-h-80" />
         </div>
         <div className="container hidden mt-4 border-4 border-gray-200 border-opacity-80 rounded-lg flex flex-col bg-slate-700 m-auto p-4 gap-4">
           Download PWA

@@ -4,14 +4,13 @@
 - [ ] Create API endpoint for draweeks
 - [x] Implement Duolingoask streak
   - [ ] check if user submitted in a 14d, if not reset
-- [x] Implement loading skeletons
-  - [x] For /draweek/current
-  - [x] For /draweek/id
-  - [x] For /draweek/vote
-  - [x] For /draweek
-  - [x] For /mydrawdle
 - [ ] Rework schema to accommodate currant fetchers
 - [ ] Improve submit form
+- [ ] Improve Drawdle Home page
+  - [ ] ui change newest submission
+  - [ ] add download pwa
+- [ ] Rework delete button
+- [ ] make a dashboard
 - [ ] Write Readme
 - [ ] REFACTOR
 
