@@ -1,4 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from "next";
+import { NextRequest, NextResponse } from "next/server";
 import { db } from "~/server/db";
 import { draweeks, pollings, votes } from "~/server/db/schema";
 import { getWinningVote } from "~/server/queries";
@@ -52,10 +52,7 @@ async function getRandomDrawableWord(): Promise<string> {
   }
 }
 
-export async function POST(
-  req: NextApiRequest,
-  res: NextApiResponse<ResponseData>,
-) {
+export async function POST() {
   try {
     const WinningVote = await getWinningVote();
     if (!WinningVote) throw new Error("Winning vote not found.");
@@ -70,7 +67,7 @@ export async function POST(
     });
     if (!newPolling) throw new Error("Winning vote not found.");
 
-    const promises = Array.from({ length: 5 }, async () => {
+    const promises = Array.from({ length: 3 }, async () => {
       const drawableWord = await getRandomDrawableWord();
       await db.insert(votes).values({
         pollingId: newPolling.id.toString(),
@@ -80,8 +77,10 @@ export async function POST(
     });
     await Promise.all(promises);
 
-    res.status(200).json({ message: "Task executed successfully" });
+    return NextResponse.json("Task executed successfully", { status: 201 });
   } catch (error) {
-    res.status(500).json({ message: `Failed to execute task: ${!error}` });
+    return NextResponse.json(`Failed to execute task: ${!error}`, {
+      status: 500,
+    });
   }
 }

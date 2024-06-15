@@ -1,9 +1,9 @@
 # TODO
 
 - [ ] FIX moodle getImage() error after deleting an image
-- [ ] Create API endpoint for draweeks
+- [x] Create API endpoint for draweeks
 - [x] Implement Duolingoask streak
-  - [ ] check if user submitted in a 14d, if not reset
+  - [?] check if user submitted in a 14d, if not reset (i feel autistic)
 - [ ] Rework schema to accommodate currant fetchers
 - [ ] Improve submit form
 - [ ] Improve Drawdle Home page

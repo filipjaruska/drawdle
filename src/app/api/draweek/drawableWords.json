@@ -1,5 +1,16 @@
 {
-  "words": ["Jenda Dojčar", "cat"],
+  "words": [
+    "apple",
+    "car",
+    "house",
+    "dog",
+    "cat",
+    "tree",
+    "star",
+    "sun",
+    "moon",
+    "fish"
+  ],
   "adjectives": [
     "bald",
     "elegant",

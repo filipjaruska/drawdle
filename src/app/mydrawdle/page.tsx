@@ -1,5 +1,5 @@
 import { SignedIn, SignedOut } from "@clerk/nextjs";
-import { getMyImages } from "~/server/queries";
+import { getMyImages, checkStreek } from "~/server/queries";
 import Link from "next/link";
 import Image from "next/image";
 import { auth } from "@clerk/nextjs/server";
@@ -17,7 +17,6 @@ export default async function MyDrawdle() {
     if (!uploaderInfo) throw new Error("User not found");
     const canUpload = uploaderInfo.privateMetadata["can-upload"]
     const streakLength = uploaderInfo.privateMetadata["streak-length"] as number
-
 
     function formatTimestamp(timestamp: number | null) {
         if (timestamp === null) {

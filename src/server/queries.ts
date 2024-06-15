@@ -23,7 +23,7 @@ export async function getImage(id: number) {
     where: (model, { eq }) => eq(model.id, id),
   });
 
-  if (!image) throw new Error("Image not found"); //return null;
+  if (!image) return {};
 
   return image;
 }
@@ -208,8 +208,14 @@ export async function submitVote(pollingId: string, topic: string) {
 }
 
 export async function getWinningVote() {
-  //fix find votes for a specific polling
-  const votes = await db.query.votes.findMany();
+  const newPolling = await db.query.pollings.findFirst({
+    orderBy: (model, { desc }) => desc(model.id),
+  });
+  if (!newPolling) throw new Error("Winning vote not found.");
+
+  const votes = await db.query.votes.findMany({
+    where: (model, { eq }) => eq(model.pollingId, newPolling.id.toString()),
+  });
   const sortedVotes = votes.sort(
     (a, b) =>
       (b.voterIDs ? b.voterIDs.length : 0) -
@@ -218,3 +224,24 @@ export async function getWinningVote() {
 
   return sortedVotes[0]?.topic;
 }
+
+// export async function checkStreek(userId: string) {
+//   const lastSubmission = await db.query.submissions.findFirst({
+//     where: (model, { eq }) => eq(model.id, Number(userId)),
+//   });
+//   if (!lastSubmission) return {};
+
+//   const lastSubmissionDate = new Date(lastSubmission.createdAt); // Adjust according to your schema
+//   const now = new Date();
+//   const differenceInMillis = now.getTime() - lastSubmissionDate.getTime();
+
+//   const daysDifference = differenceInMillis / (1000 * 60 * 60 * 24);
+
+//   if (daysDifference >= 14) {
+//     await clerkClient.users.updateUserMetadata(userId, {
+//       privateMetadata: {
+//         "streak-length": 0,
+//       },
+//     });
+//   }
+// }
