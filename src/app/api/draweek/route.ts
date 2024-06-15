@@ -16,8 +16,10 @@ async function getDrawableWords(): Promise<{
     process.cwd() + "/src/app/api/draweek/drawableWords.json",
     "utf8",
   );
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const data: { words: string[]; adjectives: string[] } = JSON.parse(jsonData);
+  const data = JSON.parse(jsonData) as {
+    words: string[];
+    adjectives: string[];
+  };
   return data;
 }
 
@@ -43,13 +45,17 @@ export async function POST(
       topic: WinningVote,
     });
 
-    const newPolling = await db.insert(pollings).values({});
+    await db.insert(pollings).values({});
+
+    const newPolling = await db.query.pollings.findFirst({
+      orderBy: (model, { desc }) => desc(model.id),
+    });
     if (!newPolling) throw new Error("Winning vote not found.");
 
     const promises = Array.from({ length: 5 }, async () => {
       const drawableWord = await getRandomDrawableWord();
       await db.insert(votes).values({
-        pollingId: newPolling.oid.toString(),
+        pollingId: newPolling.id.toString(),
         topic: drawableWord,
         createdBy: "automated",
       });
