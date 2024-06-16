@@ -3,20 +3,24 @@ import { Skeleton } from '~/components/ui/skeleton'; // Adjust the path as per y
 
 const LoadingCurrentDraweek = () => {
     return (
-        <div className="container mx-auto p-4">
-            <div className='border-4 border-gray-200 border-opacity-80 p-1 gap-2 m-4 rounded-lg bg-slate-700 shadow-md'>
-                <h1 className='text-2xl text-center'> Loading Topic... </h1>
-                <h2 className='text-l text-center'> Loading Text... </h2>
+        <div className="container mx-auto my-8 p-4 space-y-8">
+            <div className="bg-card border border-border rounded-lg shadow-lg p-6">
+                <h1 className="text-4xl font-semibold text-center text-foreground">Loading topic...</h1>
+                <h2 className="text-xl text-center text-secondary-foreground mt-2">Loading description...</h2>
             </div>
-            <div className='m-4 gap-4 space-y-4'>
-                <div className='border-b-2 border-gray-200 pb-1'>
-                    <div className='text-xl'>Submissions:</div>
-                </div>
+            <div className="flex flex-row justify-between border-b border-border pb-2 mb-4">
+                <div className="text-2xl text-secondary-foreground">Submissions:</div>
+                <div className="text-2xl text-secondary-foreground">(X)</div>
+            </div>
+            <div className="space-y-8">
                 {Array.from({ length: 3 }).map((_, index) => (
-                    <div key={index} className="flex flex-col bg-slate-700 shadow-lg rounded-lg border border-gray-300 border-opacity-80 p-4">
-                        <div className="space-y-2 flex flex-row gap-4 items-center">
-                            <Skeleton className="w-[52px] h-[52px] rounded-full" />
-                            <Skeleton className="h-8 w-[200px]" />
+                    <div key={index} className="bg-card border border-border rounded-lg shadow-lg p-4">
+                        <div className="flex flex-col items-center sm:items-start sm:justify-between sm:mb-2 mb-0">
+                            <div className="flex items-center mb-4 sm:mb- gap-2">
+                                <Skeleton className="w-[64px] h-[64px] rounded-full" />
+                                <Skeleton className="h-10 w-[200px]" />
+                            </div>
+                            <p className="pt-2 text-secondary-foreground sm:mt-0 hidden md:block">description</p>
                         </div>
                         <Skeleton className="w-full min-h-56 h-screen max-h-fit rounded-xl" />
                     </div>

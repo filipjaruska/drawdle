@@ -5,42 +5,51 @@ import LinkButton from '~/components/buttons/link-button';
 import { getImages, getWinningVote } from '~/server/queries';
 
 export default async function HomePage() {
-  const WinningVote = await getWinningVote()
-  const NewArt = await getImages()
+  const winningVote = await getWinningVote();
+  const newArt = await getImages();
+
   return (
     <>
       <SignedIn>
-        <div className='border-4 border-gray-200 border-opacity-80 m-4 rounded-lg flex flex-col sm:flex-row bg-slate-700'>
-          <div className='w-full sm:w-1/2 sm:border-r-4 border-b-0 border-gray-200 p-4 flex flex-col items-center justify-center gap-4'>
-            <h1 className="text-4xl text-center">Current Draweek</h1>
-            <div className="text-gray-300">
-              <DraweekCountdown />
+        <div className="container mx-auto my-8 p-4 space-y-8">
+          <div className="bg-card border border-border rounded-lg shadow-lg flex flex-col sm:flex-row">
+            <div className="w-full sm:w-1/2 p-6 flex flex-col items-center justify-center border-b sm:border-r border-border">
+              <h1 className="text-4xl font-semibold text-center text-foreground">Current Draweek</h1>
+              <div className="mt-4 text-secondary-foreground">
+                <DraweekCountdown />
+              </div>
+              <div className="mt-6">
+                <LinkButton text="Visit Current Draweek" link="draweek/current" message={null} />
+              </div>
             </div>
-            <div className="flex justify-center items-center">
-              <LinkButton text='visit current draweek' link='draweek/current' message={null} />
+            <div className="w-full sm:w-1/2 p-6 flex flex-col items-center justify-center">
+              <h1 className="text-4xl font-semibold text-center text-foreground">Vote on Future Draweek</h1>
+              <div className="mt-4 text-secondary-foreground">Currently winning: {winningVote}</div>
+              <div className="mt-6">
+                <LinkButton text="Vote on Upcoming Draweek" link="draweek/vote" message={null} />
+              </div>
             </div>
           </div>
-          <div className='w-full sm:w-1/2 border-gray-200 border-t-4 p-4 sm:border-t-0 flex flex-col items-center justify-center gap-4'>
-            <h1 className="text-4xl text-center">Vote on Future Draweek</h1>
-            {/* Voting content goes here */}
-            <div>Currently winning: {WinningVote}</div>
-            <LinkButton text='vote on upcoming draweek' link='draweek/vote' message={null} />
+
+          <div className="bg-card border border-border rounded-lg shadow-lg p-6">
+            <div className="text-xl font-semibold text-center text-foreground mb-4">Newest Submission</div>
+            {newArt.length > 0 && (
+              <img src={newArt[0]?.url} alt="Featured work of art" className="w-full max-h-80 object-cover rounded-lg" />
+            )}
           </div>
-        </div>
-        <div className="container border-4 border-gray-200 border-opacity-80 rounded-lg flex flex-col bg-slate-700 m-auto p-4 gap-4">
-          <div className='font-semibold text-xl text-center'>newest submission</div>
-          <img src={NewArt[0]?.url} alt='featured work of art' className="max-h-80" />
-        </div>
-        <div className="container hidden mt-4 border-4 border-gray-200 border-opacity-80 rounded-lg flex flex-col bg-slate-700 m-auto p-4 gap-4">
-          Download PWA
+
+          <div className="bg-card border border-border rounded-lg shadow-lg p-6 text-center text-foreground hidden">
+            Download PWA
+          </div>
         </div>
       </SignedIn>
+
       <SignedOut>
-        <div className="flex items-center justify-center h-screen">
-          <div className="text-center">
-            <div className="text-2xl">(Drawdle is being constructed.)</div>
-            <div className=" text-gray-500">Feel free to log in and checkout whats finish.</div>
-            <FunnyButton title='Funny Button' message='meow' />
+        <div className="flex items-center justify-center min-h-screen bg-background">
+          <div className="text-center p-6 bg-card border border-border rounded-lg shadow-lg">
+            <div className="text-2xl font-semibold text-foreground mb-2">Drawdle is being constructed.</div>
+            <div className="text-secondary-foreground mb-4">Feel free to log in and check out what is finished.</div>
+            <FunnyButton title="Funny Button" message="meow" />
           </div>
         </div>
       </SignedOut>

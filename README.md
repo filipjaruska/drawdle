@@ -1,6 +1,6 @@
 # TODO
 
-- [x] FIX moodle getImage() error after deleting an image (i think its been fixed since 2 commits ago)
+- [ ] Introduce remove vote button
 - [x] Implement Duolingoask streak
   - [?] check if user submitted in a 14d, if not reset (i feel autistic)
 - [ ] Rework schema to accommodate currant fetchers

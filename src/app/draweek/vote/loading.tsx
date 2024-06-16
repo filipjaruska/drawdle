@@ -3,11 +3,11 @@ import { Skeleton } from '~/components/ui/skeleton';
 
 const LoadingPage = () => {
     return (
-        <div className="container mx-auto p-4">
-            <h1 className="text-3xl font-bold mb-6 mt-4 text-center text-white">Vote for Your Favorite Topic</h1>
+        <div className="container mx-auto my-8 p-4 space-y-8">
+            <h1 className="text-3xl font-semibold text-center text-foreground">Vote for Your Favorite Topic</h1>
             <div className="grid grid-cols-1 gap-6">
-                {Array.from({ length: 3 }).map((_, index) => (
-                    <div key={index} className="border border-gray-200 border-opacity-80 p-6 rounded-lg bg-slate-700 shadow-md flex flex-col sm:flex-row justify-between items-center">
+                {Array.from({ length: 5 }).map((_, index) => (
+                    <div key={index} className="bg-card border border-border rounded-lg shadow-lg p-6 flex flex-col sm:flex-row justify-between items-center">
                         <div className="flex items-center space-x-4">
                             <div className="text-2xl font-semibold text-white flex flex-row items-baseline gap-2">
                                 <Skeleton className="w-32 h-6" />

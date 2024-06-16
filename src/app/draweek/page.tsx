@@ -1,34 +1,37 @@
-import Link from 'next/link'
-import React from 'react'
+import Link from 'next/link';
+import React from 'react';
 import { getDraweeks, getNewestDraweek } from '~/server/queries';
 import DraweekCountdown from '../components/draweek-countdown';
 
 const Draweek = async () => {
     const draweeks = await getDraweeks();
     const draweek = await getNewestDraweek();
+
     return (
-        <div className="container mx-auto p-4">
-            <Link href={"/draweek/current"}>
-                <div className='border-4 border-orange-700 border-opacity-80 m-4 rounded-lg p-4 bg-slate-700 text-center text-xl'>
-                    <h1 className="text-4xl">{draweek?.topic}</h1>
-                    <DraweekCountdown />
+        <div className="container mx-auto my-8 p-4 space-y-8">
+            <Link href="/draweek/current">
+                <div className="bg-card border border-destructive rounded-lg shadow-lg p-6 transition-transform hover:scale-105 text-center">
+                    <h1 className="text-4xl font-semibold text-foreground">{draweek?.topic}</h1>
+                    <div className="mt-4 text-secondary-foreground">
+                        <DraweekCountdown />
+                    </div>
                 </div>
             </Link>
-            <div className='border-b-2 border-gray-200 pb-1'>
-                <div className='text-xl'>Past draweeks:</div>
+            <div className="border-b border-border pb-2 mb-4">
+                <div className="text-2xl text-secondary-foreground">Past Draweeks:</div>
             </div>
-            <div>
+            <div className="space-y-4">
                 {draweeks.slice(1).map((draweek) => (
                     <Link href={`/draweek/${draweek.id}`} key={draweek.id}>
-                        <div className="border-4 border-gray-200 border-opacity-80 p-1 gap-2 m-4 rounded-lg bg-slate-700 shadow-md">
-                            <h2 className="text-2xl text-center text-white">{draweek.topic}</h2>
-                            <p className="text-l text-center text-white">{new Date(draweek.createdAt).toLocaleDateString()}</p>
+                        <div className="bg-card border border-border rounded-lg shadow-lg p-4 transition-transform hover:scale-105">
+                            <h2 className="text-2xl font-semibold text-center text-foreground">{draweek.topic}</h2>
+                            <p className="text-lg text-center text-secondary-foreground">{new Date(draweek.createdAt).toLocaleDateString()}</p>
                         </div>
                     </Link>
                 ))}
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Draweek
+export default Draweek;

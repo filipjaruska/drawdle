@@ -40,7 +40,7 @@ const SubmitVoteForm = ({ pollingId, canSubmit }: Props) => {
     }
 
     return (
-        <div className="border border-gray-200 border-opacity-80 p-6 rounded-lg bg-slate-700 shadow-md gap-4">
+        <div className="bg-card border border-border rounded-lg shadow-lg p-6 gap-4">
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-2 flex flex-col'>
                     <h1 className="text-4xl text-center">Have an Idea? GIVE IT!</h1>

@@ -6,11 +6,8 @@ import { auth } from "@clerk/nextjs/server";
 import { clerkClient } from "@clerk/nextjs/server";
 import FunnyButton from "../_components/funny-button";
 
-
 export default async function MyDrawdle() {
-
     const images = await getMyImages();
-
     const user = auth();
     if (!user.userId) throw new Error("User not authorized");
     const uploaderInfo = await clerkClient.users.getUser(user.userId);
@@ -35,11 +32,11 @@ export default async function MyDrawdle() {
         return (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
                 {images.map((image) => (
-                    <div key={image.id} className="relative p-4 border-4 border-gray-200 border-opacity-80 rounded-lg bg-slate-700 shadow-md">
+                    <div key={image.id} className="relative p-4 border-4 border-muted rounded-lg bg-card shadow-md">
                         <Link href={`/art/${image.id}`}>
-                            <Image alt={image.name} width={192} height={192} src={image.url} className="w-full h-auto rounded-lg" />
+                            <Image alt={image.name} width={192} height={192} src={image.url} className="hover:scale-105 w-full h-auto rounded-lg" />
                         </Link>
-                        <div className="text-xl text-center mt-2 text-white">{image.name}</div>
+                        <div className="text-xl text-center mt-2 text-card-foreground">{image.name}</div>
                     </div>
                 ))}
             </div>
@@ -49,11 +46,11 @@ export default async function MyDrawdle() {
     return (
         <>
             <SignedOut>
-                <div className="w-full h-full text-2xl text-center ">Please sign in above.</div>
+                <div className="w-full h-full text-2xl text-center text-foreground">Please sign in above.</div>
             </SignedOut>
             <SignedIn>
                 <div className="container mx-auto p-4">
-                    <div className="border-4 border-gray-200 border-opacity-80 m-4 rounded-lg flex bg-slate-700 gap-4 p-4 justify-between">
+                    <div className="border-4 border-muted m-4 rounded-lg flex bg-card gap-4 p-4 justify-between">
                         <div className="flex gap-4">
                             <div style={{ userSelect: 'none' }} className="relative">
                                 <img
@@ -63,14 +60,14 @@ export default async function MyDrawdle() {
                                     height={54}
                                     className="rounded-full"
                                 />
-                                <div className="absolute -top-2 -right-2 bg-orange-600 text-white text-xl font-bold rounded-full w-7 h-7 flex items-center justify-center">
+                                <div className="absolute animate-bounce -top-2 -right-2 bg-destructive text-destructive-foreground text-xl font-bold rounded-full w-7 h-7 flex items-center justify-center">
                                     {streakLength ? streakLength : 0}
                                 </div>
                                 <div className="absolute -left-1 -bottom-1 flex items-center justify-center">{canUpload ? "🟢" : "🔴"}</div>
                             </div>
-                            <div className="flex flex-col justify-center text-white">
+                            <div className="flex flex-col justify-center text-foreground">
                                 <div className="text-lg font-semibold">{uploaderInfo.fullName}</div>
-                                <div className="text-gray-400">Last online at: {formatTimestamp(uploaderInfo.lastActiveAt)}</div>
+                                <div className="text-muted-foreground">Last online at: {formatTimestamp(uploaderInfo.lastActiveAt)}</div>
                             </div>
                         </div>
                         <div className="flex items-center justify-center">

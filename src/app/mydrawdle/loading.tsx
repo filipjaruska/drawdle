@@ -6,7 +6,7 @@ export default function MyDrawdleLoading() {
     const Images = () => (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
             {Array.from({ length: 8 }).map((_, index) => (
-                <div key={index} className="relative p-4 border-4 border-gray-200 border-opacity-80 rounded-lg bg-slate-700 shadow-md">
+                <div key={index} className="relative p-4 border-4 border-muted rounded-lg bg-card shadow-md">
                     <Skeleton className="w-full h-48 rounded-lg" />
                     <Skeleton className="w-3/4 h-6 mt-2 mx-auto" />
                 </div>
@@ -16,7 +16,7 @@ export default function MyDrawdleLoading() {
 
     return (
         <div className="container mx-auto p-4">
-            <div className="border-4 border-gray-200 border-opacity-80 m-4 rounded-lg flex bg-slate-700 gap-4 p-4 justify-between">
+            <div className="border-4 border-muted m-4 rounded-lg flex bg-card gap-4 p-4 justify-between">
                 <div className="flex gap-4">
                     <div style={{ userSelect: 'none' }} className="relative">
                         <Skeleton className="rounded-full" style={{ width: 54, height: 54 }} />

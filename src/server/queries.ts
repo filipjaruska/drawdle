@@ -164,11 +164,9 @@ export async function postVote(userId: string, pollingId: number) {
   const vote = await db.query.votes.findFirst({
     where: (model, { eq }) => eq(model.id, pollingId),
   });
-  console.log(vote);
   const uploaderInfo = await clerkClient.users.getUser(userId);
   if (!uploaderInfo) throw new Error("User not found");
   if (vote && !vote.voterIDs?.includes(userId)) {
-    console.log("IT passed");
     await db
       .update(votes)
       .set({
