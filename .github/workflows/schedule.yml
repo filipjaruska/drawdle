@@ -9,4 +9,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Curl API request
-        run: curl -X POST https://drawdle-beta.vercel.app/api/draweek/
+        run: curl -X POST https://drawdle.art/api/draweek/

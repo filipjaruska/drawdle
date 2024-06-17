@@ -1,30 +1,27 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { db } from "~/server/db";
 import { draweeks, pollings, votes } from "~/server/db/schema";
 import { getWinningVote } from "~/server/queries";
-import { promises as fs } from "fs";
-
-type ResponseData = {
-  message: string;
-};
 
 async function getDrawableWords(): Promise<{
   words: string[];
   adjectives: string[];
 }> {
   try {
-    const jsonData = await fs.readFile(
-      process.cwd() + "/src/app/api/draweek/drawableWords.json",
-      "utf8",
+    const response = await fetch(
+      `${process.env.VERCEL_URL}/drawableWords.json`,
     );
-    const data = JSON.parse(jsonData) as {
+    if (!response.ok) {
+      throw new Error("Failed to fetch drawableWords.json");
+    }
+    const data = (await response.json()) as {
       words: string[];
       adjectives: string[];
     };
     return data;
   } catch (error) {
-    console.error("Error reading or parsing drawableWords.json:", error);
-    throw new Error("Failed to read or parse drawableWords.json");
+    console.error("Error fetching drawableWords.json:", error);
+    throw new Error("Failed to fetch drawableWords.json");
   }
 }
 
@@ -65,7 +62,7 @@ export async function POST() {
     const newPolling = await db.query.pollings.findFirst({
       orderBy: (model, { desc }) => desc(model.id),
     });
-    if (!newPolling) throw new Error("Winning vote not found.");
+    if (!newPolling) throw new Error("New polling not found.");
 
     const promises = Array.from({ length: 5 }, async () => {
       const drawableWord = await getRandomDrawableWord();
@@ -77,10 +74,17 @@ export async function POST() {
     });
     await Promise.all(promises);
 
-    return NextResponse.json("Task executed successfully", { status: 201 });
+    return NextResponse.json(
+      { message: "Task executed successfully" },
+      { status: 201 },
+    );
   } catch (error) {
-    return NextResponse.json(`Failed to execute task: ${!error}`, {
-      status: 500,
-    });
+    console.error("Error executing task:", error);
+    return NextResponse.json(
+      { message: `Failed to execute task: ${!error}` },
+      {
+        status: 500,
+      },
+    );
   }
 }
