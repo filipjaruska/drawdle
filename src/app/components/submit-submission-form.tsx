@@ -48,7 +48,7 @@ const SubmitSubmissionForm = ({ draweekId, canSubmit }: Props) => {
     };
 
     return (
-        <div className='bg-card border border-border rounded-lg shadow-lg p-1 gap-2 m-4  bg-slate-700  items-center flex flex-row justify-center'>
+        <div className='bg-card border border-border rounded-lg shadow-lg p-1 gap-2 m-4 items-center flex flex-row justify-center'>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-2 flex flex-col'>
                     <h1 className="text-4xl text-center">Submit form</h1>

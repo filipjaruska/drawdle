@@ -81,7 +81,8 @@ export async function POST() {
   } catch (error) {
     console.error("Error executing task:", error);
     return NextResponse.json(
-      { message: `Failed to execute task: ${!error}` },
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      { message: `Failed to execute task: ${error}` },
       {
         status: 500,
       },
