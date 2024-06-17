@@ -8,7 +8,7 @@ async function getDrawableWords(): Promise<{
   adjectives: string[];
 }> {
   try {
-    const response = await fetch("/drawableWords.json");
+    const response = await fetch("https://www.drawdle.art/drawableWords.json");
     if (!response.ok) {
       throw new Error("Failed to fetch drawableWords.json");
     }
