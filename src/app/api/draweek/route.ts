@@ -9,7 +9,7 @@ async function getDrawableWords(): Promise<{
 }> {
   try {
     const response = await fetch(
-      `${process.env.VERCEL_URL}/drawableWords.json`,
+      `${process.env.THIS_WEBSITE_URL}/drawableWords.json`,
     );
     if (!response.ok) {
       throw new Error("Failed to fetch drawableWords.json");
