@@ -8,9 +8,7 @@ async function getDrawableWords(): Promise<{
   adjectives: string[];
 }> {
   try {
-    const response = await fetch(
-      `${process.env.THIS_WEBSITE_URL}/drawableWords.json`,
-    );
+    const response = await fetch("/drawableWords.json");
     if (!response.ok) {
       throw new Error("Failed to fetch drawableWords.json");
     }
