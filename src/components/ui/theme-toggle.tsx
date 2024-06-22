@@ -8,7 +8,7 @@ import { Button } from "./button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./dropdown-menu"
 
 export function ModeToggle() {
-    const { setTheme } = useTheme()
+    const { setTheme, themes } = useTheme()
 
     return (
         <DropdownMenu>
@@ -20,15 +20,11 @@ export function ModeToggle() {
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={() => setTheme("light")}>
-                    Light
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme("dark")}>
-                    Dark
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme("system")}>
-                    System
-                </DropdownMenuItem>
+                {themes.map(theme => (
+                    <DropdownMenuItem key={theme} onClick={() => setTheme(theme)}>
+                        {theme}
+                    </DropdownMenuItem>
+                ))}
             </DropdownMenuContent>
         </DropdownMenu>
     )

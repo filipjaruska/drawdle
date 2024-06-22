@@ -1,0 +1,52 @@
+{
+  "theme_color": "#333333",
+  "background_color": "#E6E6E6",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/",
+  "name": "Drawdle",
+  "short_name": "Drawdle",
+  "description": "description about a fat fish",
+  "shortcuts": [
+    {
+      "name": "Current Draweek",
+      "short_name": "Draweek",
+      "description": "description about a fat fish",
+      "url": "/draweek/current",
+      "icons": [
+        { "src": "/icon-192x192.png", "sizes": "192x192", "type": "image/png" }
+      ]
+    },
+    {
+      "name": "Vote on Draweek",
+      "short_name": "Vote",
+      "description": "description about a fat fish",
+      "url": "/draweek/vote",
+      "icons": [
+        { "src": "/icon-192x192.png", "sizes": "192x192", "type": "image/png" }
+      ]
+    }
+  ],
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-256x256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

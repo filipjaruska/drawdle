@@ -8,11 +8,17 @@ import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "./api/uploadthing/core";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "next-themes";
+import type { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Drawdle",
   description: "Draw as a hobby",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
+  manifest: '/manifest.json',
+  icons: [
+    { rel: "icon", url: "/favicon.ico" },
+    { rel: "icon", url: "/icon-192x192.png", sizes: "192x192", type: "image/png" },
+    { rel: "msapplication-TileImage", url: "/icon-192x192.png", sizes: "192x192" },
+  ],
 };
 
 export default function RootLayout({
@@ -39,6 +45,7 @@ export default function RootLayout({
             attribute="class"
             defaultTheme="system"
             enableSystem
+            themes={["light", "dark", "odark"]}
             disableTransitionOnChange
           >
             <div>

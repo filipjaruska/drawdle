@@ -38,7 +38,7 @@ const VotePage = async () => {
                                     <img
                                         key={index}
                                         src={image}
-                                        alt="Voter"
+                                        alt={"Vote"}
                                         height={40}
                                         width={40}
                                         className={`rounded-full border-2 border-border ${index % Math.floor(Math.random() * 2) === 0 ? ' animate-spin ease-in-out' : ''}`}
