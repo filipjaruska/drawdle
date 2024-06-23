@@ -26,11 +26,7 @@ export async function POST(request: NextRequest) {
 
     const existingSubscription = await db.query.subscriptions.findFirst({
       where: (model, { eq }) =>
-        and(
-          eq(model.userId, user.userId),
-          eq(model.endpoint, body.endpoint),
-          eq(model.keys, body.keys),
-        ),
+        and(eq(model.userId, user.userId), eq(model.endpoint, body.endpoint)),
     });
 
     if (existingSubscription) {
