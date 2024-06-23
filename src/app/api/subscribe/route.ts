@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { subscriptions } from "~/server/db/schema";
 import { auth } from "@clerk/nextjs/server";
 import { db } from "~/server/db";
+import { and } from "drizzle-orm";
 
 interface Subscription {
   endpoint: string;
@@ -24,7 +25,12 @@ export async function POST(request: NextRequest) {
     if (!user.userId) throw new Error("User not authorized");
 
     const existingSubscription = await db.query.subscriptions.findFirst({
-      where: (model, { eq }) => eq(model.userId, user.userId),
+      where: (model, { eq }) =>
+        and(
+          eq(model.userId, user.userId),
+          eq(model.endpoint, body.endpoint),
+          eq(model.keys, body.keys),
+        ),
     });
 
     if (existingSubscription) {
