@@ -6,9 +6,6 @@
 - [ ] Rework schema to accommodate currant fetchers
 - [x] Improve submit form
   - [ ] display an actual image
-- [x] Improve Drawdle Home page
-  - [x] ui change newest submission
-  - [x] add download pwa
 - [ ] Rework delete button
 - [ ] make a dashboard
 - [ ] Write Readme

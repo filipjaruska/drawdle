@@ -8,6 +8,7 @@ import {
   serial,
   timestamp,
   varchar,
+  json,
 } from "drizzle-orm/pg-core";
 
 /**
@@ -129,3 +130,10 @@ export const votes = createTable(
     foreignKeys: [{ columns: [vote.pollingId], references: [pollings.id] }],
   }),
 );
+
+export const subscriptions = createTable("subscription", {
+  id: serial("id").primaryKey(),
+  userId: varchar("user_id", { length: 256 }).notNull(),
+  endpoint: varchar("endpoint", { length: 256 }).notNull(),
+  keys: json("keys").notNull(),
+});

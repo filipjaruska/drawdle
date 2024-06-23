@@ -4,6 +4,7 @@ import FunnyButton from './_components/funny-button';
 import LinkButton from '~/components/buttons/link-button';
 import { getImages, getWinningVote } from '~/server/queries';
 import DownloadDraweek from './_components/download-draweek';
+import TestPage from './test/page';
 
 export default async function HomePage() {
   const winningVote = await getWinningVote();
@@ -12,6 +13,7 @@ export default async function HomePage() {
   return (
     <>
       <SignedIn>
+        <TestPage />
         <div className="container mx-auto my-8 p-4 space-y-8">
           <div className="bg-card border border-border rounded-lg shadow-lg flex flex-col sm:flex-row">
             <div className="w-full sm:w-1/2 p-6 flex flex-col items-center justify-center border-b sm:border-r border-border">

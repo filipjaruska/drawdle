@@ -1,7 +1,17 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { NextResponse } from "next/server";
 import { db } from "~/server/db";
 import { draweeks, pollings, votes } from "~/server/db/schema";
 import { getWinningVote } from "~/server/queries";
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-var-requires
+const webpush = require("web-push");
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+webpush.setVapidDetails(
+  "mailto:your-email@example.com",
+  process.env.NEXT_PUBLIC_WEB_PUSH_PUBLIC_KEY,
+  process.env.WEB_PUSH_PRIVATE_KEY,
+);
 
 async function getDrawableWords(): Promise<{
   words: string[];
@@ -71,6 +81,26 @@ export async function POST() {
       });
     });
     await Promise.all(promises);
+
+    const subscriptions = await db.query.subscriptions.findMany();
+
+    // Send push notifications
+    const notificationPayload = JSON.stringify({
+      title: "New Draweek Theme",
+      body: `A new polling has been created with the topic: ${WinningVote}`,
+      icon: "/icon-192x192.png",
+    });
+
+    subscriptions.forEach((subscription) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+      webpush
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        .sendNotification(subscription, notificationPayload)
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+        .catch((error: any) => {
+          console.error("Error sending notification", error);
+        });
+    });
 
     return NextResponse.json(
       { message: "Task executed successfully" },
