@@ -8,5 +8,8 @@ jobs:
   run-task:
     runs-on: ubuntu-latest
     steps:
-      - name: Curl API request
-        run: curl -X POST https://drawdle.art/api/draweek/
+      - name: Curl API request with debugging
+        run: |
+          curl -L -X POST -H "Content-Type: application/json" https://drawdle.art/api/draweek/ -o response.txt -w "%{http_code}"
+          echo "Response:"
+          cat response.txt
