@@ -1,10 +1,10 @@
-import { SignedIn, SignedOut } from '@clerk/nextjs';
-import DraweekCountdown from './components/draweek-countdown';
-import FunnyButton from './_components/funny-button';
-import LinkButton from '~/components/buttons/link-button';
-import { getImages, getWinningVote } from '~/server/queries';
-import DownloadDraweek from './_components/download-draweek';
-import TestPage from './test/page';
+import { SignedIn, SignedOut } from "@clerk/nextjs";
+import DraweekCountdown from "./components/draweek-countdown";
+import FunnyButton from "./_components/funny-button";
+import LinkButton from "~/components/buttons/link-button";
+import { getImages, getWinningVote } from "~/server/queries";
+import DownloadDraweek from "./_components/download-draweek";
+import TestPage from "./test/page";
 
 export default async function HomePage() {
   const winningVote = await getWinningVote();
@@ -14,34 +14,54 @@ export default async function HomePage() {
     <>
       <SignedIn>
         <TestPage />
-        <div className="container mx-auto my-8 p-4 space-y-8">
-          <div className="bg-card border border-border rounded-lg shadow-lg flex flex-col sm:flex-row">
-            <div className="w-full sm:w-1/2 p-6 flex flex-col items-center justify-center border-b sm:border-r border-border">
-              <h1 className="text-4xl font-semibold text-center text-foreground">Current Draweek</h1>
+        <div className="container mx-auto my-8 space-y-8 p-4">
+          <div className="flex flex-col rounded-lg border border-border bg-card shadow-lg sm:flex-row">
+            <div className="flex w-full flex-col items-center justify-center border-b border-border p-6 sm:w-1/2 sm:border-r">
+              <h1 className="text-center text-4xl font-semibold text-foreground">
+                Current Draweek
+              </h1>
               <div className="mt-4 text-secondary-foreground">
                 <DraweekCountdown />
               </div>
               <div className="mt-6">
-                <LinkButton text="Visit Current Draweek" link="draweek/current" message={null} />
+                <LinkButton
+                  text="Visit Current Draweek"
+                  link="draweek/current"
+                  message={null}
+                />
               </div>
             </div>
-            <div className="w-full sm:w-1/2 p-6 flex flex-col items-center justify-center">
-              <h1 className="text-4xl font-semibold text-center text-foreground">Vote on Future Draweek</h1>
-              <div className="mt-4 text-secondary-foreground">Currently winning: {winningVote}</div>
+            <div className="flex w-full flex-col items-center justify-center p-6 sm:w-1/2">
+              <h1 className="text-center text-4xl font-semibold text-foreground">
+                Vote on Future Draweek
+              </h1>
+              <div className="mt-4 text-secondary-foreground">
+                Currently winning: {winningVote}
+              </div>
               <div className="mt-6">
-                <LinkButton text="Vote on Upcoming Draweek" link="draweek/vote" message={null} />
+                <LinkButton
+                  text="Vote on Upcoming Draweek"
+                  link="draweek/vote"
+                  message={null}
+                />
               </div>
             </div>
           </div>
 
-          <div className="bg-card border border-border rounded-lg shadow-lg flex flex-col sm:flex-row">
-            <div className="w-full sm:w-1/2 p-6 flex flex-col items-center justify-center border-b sm:border-r border-border">
-              <h1 className="text-2xl font-semibold text-center text-foreground pb-2">Newest Submission</h1>
+          <div className="flex flex-col rounded-lg border border-border bg-card shadow-lg sm:flex-row">
+            <div className="flex w-full flex-col items-center justify-center border-b border-border p-6 sm:w-1/2 sm:border-r">
+              <h1 className="pb-2 text-center text-2xl font-semibold text-foreground">
+                Newest Submission
+              </h1>
               {newArt.length > 0 && (
-                <img src={newArt[0]?.url} alt="Featured work of art" className="w-full max-h-80 object-cover rounded-lg" />
+                <img
+                  src={newArt[0]?.url}
+                  alt="Featured work of art"
+                  className="max-h-80 w-full rounded-lg object-cover"
+                />
               )}
             </div>
-            <div className="w-full sm:w-1/2 p-6 flex flex-col items-center justify-center">
+            <div className="flex w-full flex-col items-center justify-center p-6 sm:w-1/2">
               <DownloadDraweek />
             </div>
           </div>
@@ -49,10 +69,14 @@ export default async function HomePage() {
       </SignedIn>
 
       <SignedOut>
-        <div className="flex items-center justify-center min-h-screen bg-background">
-          <div className="text-center p-6 bg-card border border-border rounded-lg shadow-lg">
-            <div className="text-2xl font-semibold text-foreground mb-2">Drawdle is being constructed.</div>
-            <div className="text-secondary-foreground mb-4">Feel free to log in and check out what is finished.</div>
+        <div className="flex min-h-screen items-center justify-center bg-background">
+          <div className="rounded-lg border border-border bg-card p-6 text-center shadow-lg">
+            <div className="mb-2 text-2xl font-semibold text-foreground">
+              Drawdle is being constructed.
+            </div>
+            <div className="mb-4 text-secondary-foreground">
+              Feel free to log in and check out what is finished.
+            </div>
             <FunnyButton title="Funny Button" message="meow" />
           </div>
         </div>

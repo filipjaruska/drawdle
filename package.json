@@ -1,7 +1,20 @@
 {
   "name": "drawdle",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.1.0-archived",
+  "private": false,
+  "license": "MIT",
+  "author": "filip jaruska",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/filipjaruska/drawdle.git"
+  },
+  "keywords": [
+    "educational",
+    "not-production",
+    "drawing",
+    "nextjs",
+    "t3-stack"
+  ],
   "type": "module",
   "scripts": {
     "build": "next build",
@@ -11,7 +24,8 @@
     "db:studio": "drizzle-kit studio",
     "dev": "next dev",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@clerk/nextjs": "^5.1.3",

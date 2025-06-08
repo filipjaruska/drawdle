@@ -13,11 +13,20 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Drawdle",
   description: "Draw as a hobby",
-  manifest: '/manifest.json',
+  manifest: "/manifest.json",
   icons: [
     { rel: "icon", url: "/favicon.ico" },
-    { rel: "icon", url: "/icon-192x192.png", sizes: "192x192", type: "image/png" },
-    { rel: "msapplication-TileImage", url: "/icon-192x192.png", sizes: "192x192" },
+    {
+      rel: "icon",
+      url: "/icon-192x192.png",
+      sizes: "192x192",
+      type: "image/png",
+    },
+    {
+      rel: "msapplication-TileImage",
+      url: "/icon-192x192.png",
+      sizes: "192x192",
+    },
   ],
 };
 
